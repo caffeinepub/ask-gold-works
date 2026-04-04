@@ -1,0 +1,250 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "PlayfairDisplay";
+  src: url("/assets/fonts/PlayfairDisplay.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GeneralSans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.25rem;
+
+    /* Ask Gold Works color tokens — dark-luxury theme */
+    /* Near-black backgrounds */
+    --background: 0.12 0.005 60;
+    --foreground: 0.95 0.01 90;
+    --card: 0.14 0.007 55;
+    --card-foreground: 0.95 0.01 90;
+    --popover: 0.16 0.007 55;
+    --popover-foreground: 0.95 0.01 90;
+
+    /* Gold primary */
+    --primary: 0.73 0.11 80;
+    --primary-foreground: 0.1 0.005 60;
+
+    /* Subtle gold secondary */
+    --secondary: 0.18 0.008 55;
+    --secondary-foreground: 0.73 0.11 80;
+
+    --muted: 0.17 0.006 55;
+    --muted-foreground: 0.62 0.01 80;
+
+    --accent: 0.2 0.01 60;
+    --accent-foreground: 0.73 0.11 80;
+
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    /* Borders: thin dark gold */
+    --border: 0.24 0.012 60;
+    --input: 0.19 0.01 60;
+    --ring: 0.73 0.11 80;
+
+    /* Chart colors */
+    --chart-1: 0.73 0.11 80;
+    --chart-2: 0.65 0.09 75;
+    --chart-3: 0.55 0.07 70;
+    --chart-4: 0.45 0.05 65;
+    --chart-5: 0.35 0.03 60;
+
+    /* Sidebar */
+    --sidebar: 0.11 0.005 60;
+    --sidebar-foreground: 0.95 0.01 90;
+    --sidebar-primary: 0.73 0.11 80;
+    --sidebar-primary-foreground: 0.1 0.005 60;
+    --sidebar-accent: 0.18 0.008 55;
+    --sidebar-accent-foreground: 0.73 0.11 80;
+    --sidebar-border: 0.22 0.01 60;
+    --sidebar-ring: 0.73 0.11 80;
+
+    /* Brand-specific tokens */
+    --gold-bright: 0.76 0.13 82;
+    --gold-muted: 0.7 0.09 78;
+    --gold-dim: 0.62 0.07 75;
+    --bg-deep: 0.1 0.004 55;
+    --bg-dark: 0.12 0.005 60;
+    --bg-section: 0.14 0.007 55;
+    --bg-card: 0.16 0.009 58;
+    --text-primary: 0.95 0.01 90;
+    --text-secondary: 0.72 0.008 80;
+    --border-subtle: 0.22 0.01 60;
+    --border-gold: 0.65 0.09 78;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "GeneralSans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-cinzel {
+    font-family: "Cinzel", "PlayfairDisplay", Georgia, serif;
+  }
+}
+
+@layer components {
+  .gold-text {
+    color: oklch(var(--gold-bright));
+  }
+
+  .gold-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .gold-underline::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      oklch(var(--gold-muted)),
+      oklch(var(--gold-bright)),
+      oklch(var(--gold-muted)),
+      transparent
+    );
+  }
+
+  .btn-gold {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--gold-muted)) 0%,
+      oklch(var(--gold-bright)) 50%,
+      oklch(var(--gold-muted)) 100%
+    );
+    color: oklch(var(--bg-deep));
+    font-family: "Cinzel", serif;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 0.75rem 2rem;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    border: 1px solid oklch(var(--gold-bright) / 0.6);
+  }
+
+  .btn-gold:hover {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--gold-bright)) 0%,
+      oklch(0.8 0.14 82) 50%,
+      oklch(var(--gold-bright)) 100%
+    );
+    box-shadow: 0 4px 20px oklch(var(--gold-bright) / 0.3);
+    transform: translateY(-1px);
+  }
+
+  .btn-gold-outline {
+    background: transparent;
+    color: oklch(var(--gold-bright));
+    font-family: "Cinzel", serif;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 0.75rem 2rem;
+    border-radius: 2px;
+    border: 1px solid oklch(var(--gold-bright) / 0.7);
+    transition: all 0.3s ease;
+  }
+
+  .btn-gold-outline:hover {
+    background: oklch(var(--gold-bright) / 0.1);
+    border-color: oklch(var(--gold-bright));
+    box-shadow: 0 4px 20px oklch(var(--gold-bright) / 0.15);
+    transform: translateY(-1px);
+  }
+
+  .section-title {
+    font-family: "Cinzel", serif;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: oklch(var(--gold-bright));
+  }
+
+  .input-gold {
+    background: oklch(var(--bg-card));
+    border: 1px solid oklch(var(--border-subtle));
+    color: oklch(var(--text-primary));
+    border-radius: 2px;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    font-family: "GeneralSans", sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+
+  .input-gold:focus {
+    border-color: oklch(var(--gold-muted));
+    box-shadow: 0 0 0 3px oklch(var(--gold-bright) / 0.15);
+  }
+
+  .input-gold::placeholder {
+    color: oklch(var(--text-secondary) / 0.6);
+  }
+
+  .product-card {
+    background: oklch(var(--bg-card));
+    border: 1px solid oklch(var(--border-subtle));
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  }
+
+  .product-card:hover {
+    border-color: oklch(var(--gold-dim));
+    box-shadow: 0 8px 32px oklch(var(--gold-bright) / 0.15);
+    transform: translateY(-2px);
+  }
+
+  .nav-link {
+    font-family: "Cinzel", serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: oklch(var(--text-secondary));
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    color: oklch(var(--gold-bright));
+  }
+}
