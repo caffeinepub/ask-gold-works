@@ -9,7 +9,15 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { KeyRound, Loader2, LogIn, LogOut, Trash2, X } from "lucide-react";
+import {
+  Instagram,
+  KeyRound,
+  Loader2,
+  LogIn,
+  LogOut,
+  Trash2,
+  X,
+} from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -18,6 +26,7 @@ import { useAdminContext } from "../context/AdminContext";
 import { useActor } from "../hooks/useActor";
 import AdminLoginModal from "./AdminLoginModal";
 import ChangePasswordModal from "./ChangePasswordModal";
+import SocialLinksModal from "./SocialLinksModal";
 
 function useListBookings() {
   const { actor, isFetching } = useActor();
@@ -157,6 +166,7 @@ export default function AdminBookingsPanel() {
   const { isPasswordVerified, setIsPasswordVerified } = useAdminContext();
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showSocialLinks, setShowSocialLinks] = useState(false);
 
   const handleDelete = async (id: string) => {
     try {
@@ -192,6 +202,12 @@ export default function AdminBookingsPanel() {
       <ChangePasswordModal
         open={showChangePassword}
         onClose={() => setShowChangePassword(false)}
+      />
+
+      {/* Social links modal */}
+      <SocialLinksModal
+        open={showSocialLinks}
+        onClose={() => setShowSocialLinks(false)}
       />
 
       {/* Admin floating button */}
@@ -234,6 +250,20 @@ export default function AdminBookingsPanel() {
                   {bookings.length}
                 </span>
               )}
+            </button>
+            {/* Social media links button */}
+            <button
+              type="button"
+              onClick={() => setShowSocialLinks(true)}
+              className="flex items-center gap-1 px-3 py-2 text-xs font-cinzel tracking-wider uppercase border rounded-sm transition-colors"
+              style={{
+                borderColor: "oklch(var(--border-gold) / 0.4)",
+                backgroundColor: "oklch(var(--bg-card) / 0.95)",
+                color: "oklch(var(--gold-muted))",
+              }}
+              title="Update Social Media Links"
+            >
+              <Instagram className="w-3 h-3" />
             </button>
             <button
               type="button"

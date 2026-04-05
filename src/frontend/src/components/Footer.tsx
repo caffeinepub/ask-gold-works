@@ -1,5 +1,7 @@
 import { Crown } from "lucide-react";
+import { useEffect, useState } from "react";
 import { SiFacebook, SiInstagram, SiX } from "react-icons/si";
+import { getFacebookId, getInstagramId } from "./SocialLinksModal";
 
 const NAV_LINKS = [
   { label: "Home", href: "#home" },
@@ -9,17 +11,48 @@ const NAV_LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
-const SOCIAL_LINKS = [
-  { icon: SiFacebook, href: "#", label: "Facebook" },
-  { icon: SiInstagram, href: "#", label: "Instagram" },
-  { icon: SiX, href: "#", label: "X / Twitter" },
-];
-
 export default function Footer() {
   const scrollTo = (href: string) => {
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
+
+  const [instagramId, setInstagramId] = useState("");
+  const [facebookId, setFacebookId] = useState("");
+
+  // Read social IDs on mount and whenever localStorage changes
+  useEffect(() => {
+    const refresh = () => {
+      setInstagramId(getInstagramId());
+      setFacebookId(getFacebookId());
+    };
+    refresh();
+    window.addEventListener("storage", refresh);
+    // Also poll for same-tab updates (admin saves from same tab)
+    const interval = setInterval(refresh, 1000);
+    return () => {
+      window.removeEventListener("storage", refresh);
+      clearInterval(interval);
+    };
+  }, []);
+
+  const socialLinks = [
+    {
+      icon: SiFacebook,
+      href: facebookId ? `https://facebook.com/${facebookId}` : null,
+      label: "Facebook",
+    },
+    {
+      icon: SiInstagram,
+      href: instagramId ? `https://instagram.com/${instagramId}` : null,
+      label: "Instagram",
+    },
+    {
+      icon: SiX,
+      href: null,
+      label: "X / Twitter",
+    },
+  ];
 
   const currentYear = new Date().getFullYear();
   const hostname = encodeURIComponent(window.location.hostname);
@@ -62,16 +95,23 @@ export default function Footer() {
               Owners: Sachin &amp; Kumar
             </p>
             <div className="flex gap-3">
-              {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
+              {socialLinks.map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
-                  href={href}
+                  href={href ?? "#"}
                   aria-label={label}
+                  target={href ? "_blank" : undefined}
+                  rel={href ? "noopener noreferrer" : undefined}
                   className="w-8 h-8 flex items-center justify-center rounded-full border transition-all duration-200 hover:scale-110"
                   style={{
-                    borderColor: "oklch(var(--gold-dim) / 0.4)",
-                    color: "oklch(var(--text-secondary))",
+                    borderColor: href
+                      ? "oklch(var(--gold-dim) / 0.7)"
+                      : "oklch(var(--gold-dim) / 0.3)",
+                    color: href
+                      ? "oklch(var(--gold-muted))"
+                      : "oklch(var(--text-secondary) / 0.4)",
                   }}
+                  onClick={!href ? (e) => e.preventDefault() : undefined}
                 >
                   <Icon className="w-3.5 h-3.5" />
                 </a>
